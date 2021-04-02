@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" >
+    <link rel="stylesheet" href="{% static 'css/select2.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/select2.min.js' %}"></script>
+
+
+</head>
+
+<body>
+
+    <div id="main">
+        <div id="avatar"></div>
+        <div id="account">
+            <div class="input-box"><p>用户名</p><input type="text" placeholder="Please input username" id="nick_name"></div>
+            <div class="input-box"><p>密  码</p><input type="password" placeholder="Please input password" id="password"></div>
+<!--            <div class="input-box"><p>手  机</p><input type="text" placeholder="Please input phone" id="phone"></div>-->
+            <div class="input-box"><p>邮  箱</p><input type="email" placeholder="Please input email" id="email"></div>
+            <div class="input-box"><p>学  校</p>
+                <select class="input-box js-example-basic-single" name="state" id="select">
+                      <option value="AL">Alabama</option>
+                      <option value="WY">Wyoming</option>
+                        {% for school in schools %}
+                      <option value="{{ school.name }}">{{ school.name }}</option>
+                        {% endfor %}
+
+                </select>
+            </div>
+
+            <button class="login-btn" onclick="put_register()">Register</button>
+<!--            <div id="footer">-->
+<!--                <a href="#">Forget Password?</a>-->
+<!--            </div>-->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var nick_name = ""
+        var password = ""
+        var phone = ""
+        var email = ""
+        var school = ""
+        function put_register(){
+            nick_name = $('#nick_name').val()
+            password = $('#password').val()
+            // phone = $('#phone').val()
+            email = $('#email').val()
+
+            $.ajax({
+                url: "{% url 'account:register' %}",
+                data: {
+                    nick_name: nick_name,
+                    password: password,
+                    email: email,
+                    school: school
+                     },
+                type: "POST",
+                dataType: "json",
+                success: function (data) {
+                    // data = jQuery.parseJSON(data);  //dataType指明了返回数据为json类型，故不需要再反序列化
+                    if (data["status"] == "success"){
+                        window.location.href = "{% url 'account:login' %}"
+                    } else {
+                        alert(data["message"])
+                    }
+
+                }
+            })
+        }
+
+        $("#select").change(function (){
+            school = $(this).val()
+        })
+
+          $(document).ready(function() {
+            $('.js-example-basic-single').select2();
+        });
+
+
+
+
+    </script>
+</body>
+</html>

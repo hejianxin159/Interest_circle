@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}兴趣圈子{% endblock %}
+
+{% block style %}
+<style>
+    .body-outer {
+        margin: 20px 15% 0 15%;
+        width: 70%;
+        border: 1px solid #E2E3E9;
+        height: 2000px;
+    }
+    .body-left {
+        width: 70%;
+        height: 100%;
+        border: 1px solid #E2E3E9;
+        float: left;
+
+    }
+    .body-right {
+        width: 30%;
+        border: 1px solid #E2E3E9;
+        height: 100%;
+        float: right;
+    }
+    .nav-bar {
+        height: 45px;
+        border-bottom: 1px solid #E2E3E9;
+    }
+    .nav-bar ul {
+        margin: 0;
+        padding: 0;
+    }
+    .nav-bar ul li {
+        /*width: 70%;*/
+        margin: 0 20px 0 20px;
+        text-align: center;
+        width: 75px;
+        line-height: 45px;
+        list-style: none;
+        float: left;
+    }
+    .nav-bar ul li p {
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-bar ul li a {
+        text-decoration:none;
+        color: black;
+    }
+    .nav-bar ul li a:hover {
+        /*text-decoration:none;*/
+        color: #2b669a;
+    }
+    .message {
+        /*border: 1px solid black;*/
+        height: 100px;
+
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="body-outer">
+    <div class="body-left">
+        <div class="nav-bar">
+            <ul style="overflow: hidden">
+                <li><p><a href="">学校动态</a></p></li>
+                <li><p><a href="">关注圈子</a></p></li>
+                <li><p><a href="">热门动态</a></p></li>
+            </ul>
+        </div>
+        <div class="message">
+
+        </div>
+    </div>
+    <div class="body-right">
+
+    </div>
+</div>
+{% endblock %}
