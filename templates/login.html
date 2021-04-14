@@ -31,11 +31,11 @@
 
 
     <script type="text/javascript">
-        var password = ""
-        var email = ""
+        var password = "";
+        var email = "";
         function put_login(){
-            password = $('#password').val()
-            email = $('#email').val()
+            password = $('#password').val();
+            email = $('#email').val();
 
             $.ajax({
             url: "{% url 'account:login' %}",

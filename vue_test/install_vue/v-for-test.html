@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>v-for</title>
+    <script type="text/javascript" src="../vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item in stars">{{ item }}</li>
+            <li v-for="item in students">name: {{ item.name }} age: {{ item.age }}</li>
+        </ul>
+
+    </div>
+    <script type="text/javascript">
+        var app = new Vue({
+            el: "#app",
+            data: {
+                stars: ["a", "b", "c"],
+                students: [
+                    {
+                        name: 'h',
+                        age: '22'
+                    },
+                      {
+                        name: 'j',
+                        age: '21'
+                    },
+                      {
+                        name: 'x',
+                        age: '20'
+                    }
+                ]
+            }
+        })
+    </script>
+</body>
+</html>

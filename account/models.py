@@ -5,6 +5,7 @@ from django.utils.timezone import now
 
 
 class School(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField('学校名称', max_length=100)
     information = models.TextField('学校简介')
 

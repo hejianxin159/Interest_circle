@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../vue.js" type="text/javascript"></script>
+</head>
+<body>
+
+    <div id="app">
+
+        <ul v-for="item, i in studentSort">
+           <li>{{ item.age }} {{ item.name }}</li>
+        </ul>
+
+    </div>
+    <script type="text/javascript">
+        function f(item) {
+            return item.age % 2 == 0;
+        }
+        var app = new Vue({
+            el: "#app",
+            data: {
+                students: [{
+                    name: 'h',
+                    age: 22
+                },
+                {
+                    name: 'j',
+                    age: 23
+                },
+                {
+                    name: 'x',
+                    age: 12
+                }
+                ]
+
+            },
+            computed: {
+                studentSort: function () {
+                    result = this.students.filter(f);
+                    return result
+                }
+            }
+
+        })
+
+    </script>
+</body>
+</html>

@@ -5,21 +5,21 @@
 {% block style %}
 <style>
     .body-outer {
-        margin: 20px 15% 0 15%;
-        width: 70%;
-        border: 1px solid #E2E3E9;
+        margin: 20px auto;
+        width: 1220px;
         height: 2000px;
     }
     .body-left {
-        width: 70%;
-        height: 100%;
+        width: 800px;
+        height: 500px;
         border: 1px solid #E2E3E9;
         float: left;
 
     }
     .body-right {
-        width: 30%;
+        width: 400px;
         border: 1px solid #E2E3E9;
+        margin-left: 15px;
         height: 100%;
         float: right;
     }
@@ -58,6 +58,26 @@
         height: 100px;
 
     }
+    .message-info {
+        background: yellow;
+        width: 100%;
+        height: 180px;
+    }
+    .message-title {
+        background: red;
+        height: 50px;
+        line-height: 50px;
+        font-size: 20px;
+        padding: 0 20px;
+    }
+    .message-body {
+        background: #b2dba1;
+        height: 50px;
+        line-height: 28px;
+        font-size: 15px;
+        padding:0 20px;
+        overflow: hidden;
+    }
 </style>
 {% endblock %}
 
@@ -66,17 +86,48 @@
     <div class="body-left">
         <div class="nav-bar">
             <ul style="overflow: hidden">
+                <li><p><a href="#" onclick="get_hot()">热门动态</a></p></li>
                 <li><p><a href="">学校动态</a></p></li>
                 <li><p><a href="">关注圈子</a></p></li>
-                <li><p><a href="">热门动态</a></p></li>
             </ul>
         </div>
-        <div class="message">
+        <div class="message" id="message">
+            <div class="message-info">
+                <div class="message-title">Python学习路线</div>
+                <div class="message-body">超融合基础架构（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有融合架构尝试应用于各种业务场景，但由于超融合和原有架构差异较大，市场存在各种角度的观</div>
+                <div class="message-bottom">
 
+                </div>
+            </div>
         </div>
     </div>
     <div class="body-right">
-
     </div>
+    <!--<div style="clear: both"></div>-->
 </div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    var message = document.getElementById('message');
+    // message.innerHTML = '<div>hhhh</div>'
+    function get_hot() {
+        $.ajax({
+            url: "{% url 'interest:article' %}?keyword=hot",
+            type: "GET",
+            success: function (data) {
+                // if (data["status"] == "success"){
+                //     data.
+                    // window.location.href = "{% url 'interest:index' %}"
+                // } else {
+                //     alert(data["message"])
+                // }
+                // console.log(data);
+                for (var item of data.results){
+                    message.innerHTML += "<div class='message-info'><div class='message-title'>" + item.title + "</div>" + "<div class='message-body'>" + item.body + "<div>"  + "<div class='message-bottom'>" + "adfas" + "</div></div>>"
+                }
+            }
+        })
+    }
+</script>
 {% endblock %}

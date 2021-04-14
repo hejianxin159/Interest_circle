@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <title>{% block title %}Title{% endblock %}</title>
     <style>
         body {
@@ -61,7 +63,7 @@
             cursor: pointer;
          }
 
-         .user_box {
+         .user_unlogin {
              height: 60px;
              margin-right: 50px;
              width: 140px;
@@ -80,12 +82,32 @@
              float: right;
          }
 
+          .user_login {
+             height: 60px;
+             margin-right: 50px;
+             width: 200px;
+             float: right;
+             line-height: 50px;
+             text-align: center;
+
+         }
+         .user {
+             width: 100px;
+             float: left;
+         }
+         .logout {
+             width: 70px;
+             float: right;
+         }
          .clearfix {
              clear: both;
          }
 
     </style>
+
     {% block style %}  {% endblock %}
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
 </head>
 <body>
     <div class="root">
@@ -99,19 +121,40 @@
                 <div id="search">搜索</div>
              </div>
 
-            <div class="user_box">
-                {% if request.user.is_authenticated %}
-                <div>hhh</div>
-                {% else %}
-                <div class="login"><a href="{% url 'account:login' %}">登陆</a></div>
-                <div class="regist"><a href="{% url 'account:register' %}">注册</a></div>
-                {% endif %}
-            </div>
+            {% if request.user.is_authenticated %}
+                <div class="user_login">
+                    <div class="user">{{ request.user.username }}</div>
+                    <div class="logout"><a onclick="logout()" href="#">退出</a></div>
+                </div>
+            {% else %}
+                <div class="user_unlogin">
+                    <div class="login"><a href="{% url 'account:login' %}">登陆</a></div>
+                    <div class="regist"><a href="{% url 'account:register' %}">注册</a></div>
+                </div>
+            {% endif %}
             <div class="clearfix"></div>
         </div>
 
     </div>
+    <script>
+        function logout() {
+         $.ajax({
+            url: "{% url 'account:logout' %}",
+            type: "GET",
+            success: function (data) {
+                if (data["status"] == "success"){
+                    window.location.href = "{% url 'interest:index' %}"
+                } else {
+                    alert(data["message"])
+                }
+
+            }
+        })
+
+        }
+    </script>
 {% block body %} {% endblock %}
+{% block script %} {% endblock %}
 
 </body>
 </html>

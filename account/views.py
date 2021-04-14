@@ -83,9 +83,8 @@ class Register(APIView):
                             status=200)
 
 
-class Test(generics.ListCreateAPIView):
-    pass
-
-
-class Test2(viewsets.ViewSet):
-    pass
+class Logout(APIView):
+    def get(self, request):
+        logout(request)
+        return JsonResponse({'status': 'success',
+                             'message': '退出成功'})

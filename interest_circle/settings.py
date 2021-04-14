@@ -83,8 +83,13 @@ WSGI_APPLICATION = 'interest_circle.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': 'interest',
+        'HOST': '8.136.13.187',
+        'PORT': 3306,
+        'PASSWORD': '123456',
+        'USER': 'root'
     }
 }
 
@@ -127,3 +132,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, STATIC_URL), )
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10,
+    # 'DEFAULT_RENDERER_CLASSES':
+    #     ('rest_framework.renderers.JSONRenderer',)
+}
