@@ -7,7 +7,7 @@ from rest_framework import generics
 from rest_framework import viewsets
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import login, logout
-
+from django.db.models import Q
 
 class Login(APIView):
 
@@ -53,11 +53,16 @@ class Register(APIView):
         email = request.POST.get('email')
         school = request.POST.get('school')
 
-        exist_account = Accounts.objects.filter(email=email).first()
+        exist_account = Accounts.objects.filter(Q(email=email) | Q(username=nick_name)).first()
         if exist_account:
-            return JsonResponse({'status': 'fail',
-                                 'message': '该邮箱已经注册'},
-                                status=200)
+            if exist_account.email == email:
+                return JsonResponse({'status': 'fail',
+                                     'message': '该邮箱已经注册'},
+                                    status=200)
+            else:
+                return JsonResponse({'status': 'fail',
+                                     'message': '该用户已经注册'},
+                                    status=200)
         else:
             if all([nick_name, password, email, school]):
                 school_obj = School.objects.filter(name=school).first()

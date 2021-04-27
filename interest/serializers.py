@@ -27,6 +27,7 @@ class ArticleSerializer(serializers.Serializer):
         ('o', '正常'),
         ('d', '删除')
     )
+    id = serializers.IntegerField(label='id', read_only=True)
     title = serializers.CharField(label='标题', max_length=200)
     # body = MDTextField('正文')
     body = serializers.CharField(label='正文')
