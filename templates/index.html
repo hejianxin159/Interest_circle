@@ -11,8 +11,10 @@
     }
     .body-left {
         width: 800px;
-        height: 500px;
-        border: 1px solid #E2E3E9;
+        /*height: 500px;*/
+        border-top: 1px solid #E2E3E9;
+        border-left: 1px solid #E2E3E9;
+        border-right: 1px solid #E2E3E9;
         float: left;
 
     }
@@ -55,28 +57,47 @@
     }
     .message {
         /*border: 1px solid black;*/
-        height: 100px;
+        /*height: 100px;*/
 
     }
+
     .message-info {
-        background: yellow;
+        /*background: yellow;*/
         width: 100%;
         height: 180px;
     }
+
     .message-title {
-        background: red;
+        /*background: red;*/
         height: 50px;
         line-height: 50px;
         font-size: 20px;
         padding: 0 20px;
     }
     .message-body {
-        background: #b2dba1;
+        /*background: #b2dba1;*/
         height: 50px;
         line-height: 28px;
         font-size: 15px;
         padding:0 20px;
         overflow: hidden;
+    }
+    .message-bottom {
+        height: 80px;
+        width: 100%;
+        line-height: 80px;
+        overflow: hidden;
+
+    }
+    .support {
+        height: 20px;
+        margin-top: 30px;
+        margin-left: 30px;
+        border: 1px solid black;
+        width: 50px;
+        line-height: 20px;
+        text-align: center;
+
     }
 </style>
 {% endblock %}
@@ -92,13 +113,13 @@
             </ul>
         </div>
         <div class="message" id="message">
-            <div class="message-info">
-                <div class="message-title">Python学习路线</div>
-                <div class="message-body">超融合基础架构（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有融合架构尝试应用于各种业务场景，但由于超融合和原有架构差异较大，市场存在各种角度的观</div>
-                <div class="message-bottom">
-
-                </div>
-            </div>
+            <!--<div class="message-info">-->
+                <!--<div class="message-title">Python学习路线</div>-->
+                <!--<div class="message-body">超融合基础架构（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超（Hyperconverged Infrastructure）作为近几年IT基础架构领域最重要变革技术之一，已经为越来越多客户所了解。部分的企业已经将超融合架构尝试应用于各种业务场景，但由于超融合和原有融合架构尝试应用于各种业务场景，但由于超融合和原有架构差异较大，市场存在各种角度的观</div>-->
+                <!--<div class="message-bottom">-->
+                    <!--<div class="support" onclick="put_support()">赞</div>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="body-right">
@@ -124,10 +145,35 @@
                 // }
                 // console.log(data);
                 for (var item of data.results){
-                    message.innerHTML += "<div class='message-info'><div class='message-title'>" + item.title + "</div>" + "<div class='message-body'>" + item.body + "<div>"  + "<div class='message-bottom'>" + "adfas" + "</div></div>>"
+                    message.innerHTML +=
+                        "<div class='message-info'>" +
+                            "<div class='message-title'>" + item.title + "</div>" +
+                            "<div class='message-body'>" + item.body + "</div>"  +
+                            "<div class='message-bottom'>" +
+                                "<div class='support' onclick='put_support()'>" + "赞" + "</div>" +
+                            "</div>" +
+                        "</div>"
                 }
             }
         })
     }
+   function put_support() {
+    $.ajax({
+        url: "{% url 'interest:article' %}?keyword=hot",
+        type: "GET",
+        success: function (data) {
+            // if (data["status"] == "success"){
+            //     data.
+                // window.location.href = "{% url 'interest:index' %}"
+            // } else {
+            //     alert(data["message"])
+            // }
+            // console.log(data);
+            for (var item of data.results){
+                message.innerHTML += "<div class='message-info'><div class='message-title'>" + item.title + "</div>" + "<div class='message-body'>" + item.body + "<div>"  + "<div class='message-bottom'>" + "adfas" + "</div></div>>"
+            }
+        }
+    })
+}
 </script>
 {% endblock %}
