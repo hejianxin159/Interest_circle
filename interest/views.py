@@ -35,17 +35,18 @@ class Index(APIView):
 class IndexArticle(APIView):
     def get(self, request):
         keyword = request.query_params.get('keyword')
+        # 创建分页对象
+        pager = PageNumberPagination()
         if keyword == 'hot':
             # 热门兴趣， 查询当前7天数据，按照点赞数量排序
-            # article_list = Article.objects.filter(created_time__gte=now() + timedelta(days=-7)).order_by('views')
-            article_list = Article.objects.all().order_by('views')
-            # for i in article_list:
-            #     print(i)
-            # 创建分页对象
-            pager = PageNumberPagination()
+            article_list = Article.objects.filter(created_time__gte=now() + timedelta(days=-7)).order_by('views')
             pager_data = pager.paginate_queryset(queryset=article_list, request=request)
             serializer_data = ArticleSerializer(pager_data, many=True)
-            return pager.get_paginated_response(serializer_data.data)
+        else:
+            article_list = Article.objects.all().order_by('views')
+            pager_data = pager.paginate_queryset(queryset=article_list, request=request)
+            serializer_data = ArticleSerializer(pager_data, many=True)
+        return pager.get_paginated_response(serializer_data.data)
 
 
 class SupportArticle(APIView):
