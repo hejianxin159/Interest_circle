@@ -32,3 +32,9 @@ class Comment(models.Model):
 
     created_time = models.DateTimeField('创建时间', default=now)
     last_mod_time = models.DateTimeField('修改时间', default=now)
+
+
+class Support(models.Model):
+    '''点赞功能'''
+    user_id = models.IntegerField('用户id', db_index=True)
+    article_id = models.IntegerField('文章id', db_index=True)

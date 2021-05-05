@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'account',
-    'interest'
+    'interest',
+    'comments'
 ]
 
 MIDDLEWARE = [
@@ -135,11 +136,27 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, STATIC_URL), )
 
-
+# django rest framework 的page 设置
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     # 'DEFAULT_RENDERER_CLASSES':
     #     ('rest_framework.renderers.JSONRenderer',)
 }
+
+# 跨域设置
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+# 缓存设置
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://8.136.13.187:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100}
+            # "PASSWORD": "123",
+        }
+    }
+}

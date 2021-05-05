@@ -6,8 +6,12 @@ from rest_framework.views import APIView
 from interest.models import InterestOrganization, Tag, Article
 from django.utils.timezone import now
 from datetime import timedelta
+from django_redis import get_redis_connection
 import json
 # Create your views here.
+
+
+conn = get_redis_connection('default')
 
 
 class Index(APIView):
@@ -49,9 +53,3 @@ class IndexArticle(APIView):
         return pager.get_paginated_response(serializer_data.data)
 
 
-class SupportArticle(APIView):
-    # def get(self, request):
-    #     pass
-
-    def post(self, request):
-        pass
