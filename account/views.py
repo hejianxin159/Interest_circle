@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, reverse
 from rest_framework.views import APIView
 from account.models import School, Accounts
-from django.http import HttpResponse, JsonResponse
+# from django.http import HttpResponse, JsonResponse
+from interest_circle.utils.response import JsonResponse
 from account.serializers import AccountsSerializer
 from rest_framework import generics
 from rest_framework import viewsets
@@ -23,22 +24,23 @@ class Login(APIView):
                 return JsonResponse({
                     'status': 'fail',
                     'message': '找不到用户'
-                })
+                }, 406)
             if check_password(password, account.password):
                 login(request, account)
                 return JsonResponse({
                     'status': 'success',
-                    'message': AccountsSerializer(instance=account).data
+                    'message': 'success'
+                    # 'message': AccountsSerializer(instance=account).data
                 })
             else:
                 return JsonResponse({
                     'status': 'fail',
                     'message': '密码错误'
-                })
+                }, 406)
         return JsonResponse({
             'status': 'fail',
             'message': 'error'
-        })
+        }, 406)
 
 
 class Register(APIView):
